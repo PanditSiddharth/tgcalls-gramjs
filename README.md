@@ -12,40 +12,23 @@ An operative library for Telegram calls and a tgcallsjs helper.
 ## Installation
 
 ```shell
-npm i gram-tgcalls
+npm i tgcalls-gramjs
 ```
 
 ## Example usage with audio
 
 ```js
-const { TelegramClient } = require("telegram");
-const { StringSession } = require("telegram/sessions");
-const input = require("input");
-const { GramTGCalls } = require("gram-tgcalls");
+const { GramTGCalls, gramjs } = require("tgcalls-gramjs");
 
+// Replace these values with actual values
 const apiId = 123456;
 const apiHash = "392ykiyourhashhere";
-const stringSession = new StringSession("");
-const username = "@group_username";
+const stringSession = "";
 
 (async () => {
-  console.log("Loading interactive example...");
-  const client = new TelegramClient(stringSession, apiId, apiHash, {
-    connectionRetries: 5,
-  });
-
-  await client.start({
-    phoneNumber: async () => await input.text("Please enter your number: "),
-    password: async () => await input.text("Please enter your password: "),
-    phoneCode: async () =>
-      await input.text("Please enter the code you received: "),
-    onError: (err) => console.log(err),
-  });
-
-  console.log("You should now be connected.");
-
-  let tg = new GramTGCalls(client, username);
-
+ const client = await gramjs(apiId, apiHash, stringSession);
+  console.log(client.session.save()); // use this value in stringSession after 1 time generate
+  let tg = new GramTGCalls(client, "groupusername");
   tg.streamAudio("./audio.mp3");
 })();
 
@@ -53,11 +36,13 @@ const username = "@group_username";
 
 ## Docs
 
-The docs can be found [here](https://tgcallsjs.github.io/gram-tgcalls).
+The docs can be found [here](https://tgcallsjs.github.io/gram-tgcalls).  
 
 ## Credits
 
--   Structure inspired from Telethon bridge in [MarshalX/tgcalls](https://github.com/MarshalX/tgcalls).
--   Video support by [@Laky-64](https://github.com/Laky-64).
+-   Structure inspired from Telethon bridge in [MarshalX/tgcalls](https://github.com/MarshalX/tgcalls).  
+-   Video support by [@Laky-64](https://github.com/Laky-64).  
+-   Latest version with easiness by @PanditSiddharth  
 
+inherited: tgcalls -> gram-tgcalls -> tgcalls-gramjs  
 
